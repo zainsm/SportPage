@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Page Styling */
+body {
+    margin: 0;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: #ffffff;
+  }
+
+.center {
+  text-align: center;
+}
+
+/* Navigation Bar*/
+.topnavigationbar {
+   overflow: hidden;
+   background-color: #0C0B13;
+  }
+
+.topnavigationbar a {
+  float: left;
+  color: #664EAE;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  }
+
+.topnavigationbar a.split {
+  float: right;
+  background-color: #664EAE;
+  color: #0C0B13;
+  }
+
+.topnavigationbar a:hover {
+  background-color: #ffffff;
+  color: #664EAE;
+  }
+
+  /* Sign Up / Sign In Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+  }
+
+  .modal-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #664EAE;
+  }
+
+  .modal-body input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  .modal-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .modal-footer button {
+    padding: 10px 20px;
+    background-color: #664EAE;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .modal-footer button:hover {
+    background-color: #50398c;
+  }
+
+  .redirect-link {
+    color: #664EAE;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .redirect-link:hover {
+    text-decoration: underline;
+  }
+
+  .message-modal {
+    display: none;
+    position: fixed;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 2px solid #664EAE;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .message-modal button {
+    margin-top: 15px;
+    padding: 10px 15px;
+    background-color: #664EAE;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+  }
+
+ /* After Sign in Drop Down Menu*/   
+  #dropdownMenu {
+    position: absolute;
+    right: 16px;
+    top: 50px;
+    background-color: #0C0B13;
+    color: #664EAE;
+    border: 1px solid #664EAE;
+    display: none;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  #dropdownMenu a {
+    text-decoration: none;
+    color: #664EAE;
+    padding: 5px 10px;
+  }
+
+  #dropdownMenu a:hover {
+    background-color: #50398c;
+    color: white;
+  }
+
+/* Footer*/
+.BottomPage {
+       position: fixed;
+       left: 0;
+       bottom: 0;
+       width: 100%;
+       background-color: #0C0B13;
+       color: #664EAE;
+       text-align: center;
+       font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+       font-size: 17px;
+}
+
+/* Quiz Boxes*/
+.quiz-container {
+  margin: 20px;
+}
+
+.question-block {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid #000000;
+  background-color: #000000;
+  color: #664EAE;
+}
+
+.question {
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+  height: 20%;
+}
+
+.image2 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+  height: 30%;
+}
+
+/* Answer Block Replacment*/
+.answer {
+  display: block;
+  background-color: #000000;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #664EAE;
+  cursor: pointer;
+  text-align: left;
+}
+
+.answer:hover {
+  background-color: #e0e0e0;
+}
+
+.correct {
+  background-color: #28a745 !important;
+  color: #ffffff;
+}
+
+.wrong {
+  background-color: #dc3545 !important;
+  color: #ffffff;
+}
+
+.feedback {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.correct-text {
+  color: #28a745;
+}
+
+.wrong-text {
+  color: #dc3545;
+}
+
+/* Introduction Section*/
+.header-section {
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: center;
+  font-size: 30px;
+  color: #664EAE;
+}
+
+.text-area {
+  padding: 10px;
+  font-size: 18px;
+  line-height: 1.5;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+/* Bottom Results Box (Time & Score)*/
+.results-container {
+  text-align: center;
+  font-size: 24px;
+  color: #664EAE;
+  margin: 50px auto;
+  display: none;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+}
+
+.results-container p {
+  margin: 10px 0;
+}
+
+</style>
+</head>
+
+<!-- Navigation Bar -->
+<div class="topnavigationbar">
+  <a class="active" href="Homepage.html">Home</a>
+  <a href="QuizPage.html">Quiz's</a>
+  <a href="#" class="split" id="signupBtn">Sign Up</a>
+  <a href="#" class="split" id="userMenu" style="display: none;">
+    <span id="usernameDisplay"></span>
+  </a>
+  <div id="dropdownMenu">
+    <a href="#" onclick="showAccountInfo()">Account</a>
+    <a href="#" onclick="signOut()">Sign Out</a>
+  </div>
+</div>
+
+<div class="header-section">
+  <h1>Sport Quiz</h1>
+</div>
+
+<div class="text-area">
+  <p style="color:#664EAE;">Are you a true sports enthusiast or just a casual fan? It’s time to lace up your sneakers, grab your gear, and see if you’ve got what it takes to claim the title of Sports Trivia Champion! From legendary athletes to iconic moments, this quiz covers the best of the best across the world of sports.</p>
+</div>
+
+<div class="quiz-container" id="quiz-container"></div>
+
+<div class="results-container" id="results-container">
+  <!-- This section is dynamically updated by JavaScript -->
+</div>
+
+<!-- Sign In/Sing Up Models -->
+<div id="signupModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">Sign Up</div>
+    <div class="modal-body">
+      <label for="signup-username">Username</label>
+      <input type="text" id="signup-username" placeholder="Enter your username">
+      <span id="signup-username-error" class="error-message"></span>
+      <label for="signup-password">Password</label>
+      <input type="password" id="signup-password" placeholder="Enter your password">
+      <span id="signup-password-error" class="error-message"></span>
+      <label for="confirm-password">Confirm Password</label>
+      <input type="password" id="confirm-password" placeholder="Confirm your password">
+      <span id="confirm-password-error" class="error-message"></span>
+    </div>
+    <div class="modal-footer">
+      <button onclick="handleSignUp()">Sign Up</button>
+      <a href="#" class="redirect-link" onclick="showSignIn()">Already have an account? Sign In</a>
+    </div>
+  </div>
+</div>
+
+<div id="signinModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">Sign In</div>
+    <div class="modal-body">
+      <label for="signin-username">Username</label>
+      <input type="text" id="signin-username" placeholder="Enter your username">
+      <span id="signin-username-error" class="error-message"></span>
+      <label for="signin-password">Password</label>
+      <input type="password" id="signin-password" placeholder="Enter your password">
+      <span id="signin-password-error" class="error-message"></span>
+    </div>
+    <div class="modal-footer">
+      <button onclick="handleSignIn()">Sign In</button>
+      <a href="#" class="redirect-link" onclick="showSignUp()">Don't have an account? Sign Up</a>
+    </div>
+  </div>
+</div>
+
+<!-- Account Modal -->
+<div id="accountModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">Account Information</div>
+    <div class="modal-body">
+      <p><strong>Username:</strong> <span id="accountUsername"></span></p>
+      <p><strong>Password:</strong></p>
+      <input type="password" id="accountPassword" readonly>
+    </div>
+    <div class="modal-footer">
+      <button onclick="closeModal('accountModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="messageModal" class="message-modal">
+  <div id="messageText"></div>
+  <button id="messageOkButton" onclick="closeMessage()" style="display: none;">OK</button>
+</div>
+
+<!-- Footer -->
+<div class="BottomPage">
+  <p style="color: #0084fE;">A Zain Project</p>
+</div>
+
+<div class="BottomPage">
+  <p style="color: #664EAE;">A Zain Project</p>
+</div>
+
+<script>
+  // Question bank
+  const questions = [
+  {
+    question: "Which sport is known as 'the beautiful game'?",
+    answers: [
+      { text: "Basketball", correct: false },
+      { text: "Soccer (Football)", correct: true },
+      { text: "Tennis", correct: false },
+      { text: "Rugby", correct: false }
+    ]
+  },
+  {
+    question: "How many players are on a basketball team on the court at one time?",
+    answers: [
+      { text: "4", correct: false },
+      { text: "5", correct: true },
+      { text: "6", correct: false },
+      { text: "7", correct: false }
+    ]
+  },
+  {
+    question: "Which country won the FIFA World Cup in 2018?",
+    answers: [
+      { text: "Germany", correct: false },
+      { text: "France", correct: true },
+      { text: "Brazil", correct: false },
+      { text: "Argentina", correct: false }
+    ]
+  },
+  {
+    question: "What is the highest governing body of cricket?",
+    answers: [
+      { text: "FIFA", correct: false },
+      { text: "ICC", correct: true },
+      { text: "IOC", correct: false },
+      { text: "BCCI", correct: false }
+    ]
+  },
+  {
+    question: "What is the term for scoring three goals in a single soccer match?",
+    answers: [
+      { text: "Hat-trick", correct: true },
+      { text: "Triple", correct: false },
+      { text: "Hattrick", correct: false },
+      { text: "Treble", correct: false }
+    ]
+  },
+  {
+    question: "Which country is known as the home of golf?",
+    answers: [
+      { text: "Ireland", correct: false },
+      { text: "Scotland", correct: true },
+      { text: "United States", correct: false },
+      { text: "England", correct: false }
+    ]
+  },
+  {
+    question: "Who holds the record for the most Olympic gold medals?",
+    answers: [
+      { text: "Usain Bolt", correct: false },
+      { text: "Michael Phelps", correct: true },
+      { text: "Simone Biles", correct: false },
+      { text: "Carl Lewis", correct: false }
+    ]
+  },
+  {
+    question: "What is the highest score possible in a single frame of bowling?",
+    answers: [
+      { text: "300", correct: true },
+      { text: "400", correct: false },
+      { text: "250", correct: false },
+      { text: "350", correct: false }
+    ]
+  },
+  {
+    question: "What is the term for a score of zero in tennis?",
+    answers: [
+      { text: "Nil", correct: false },
+      { text: "Love", correct: true },
+      { text: "Void", correct: false },
+      { text: "Zero", correct: false }
+    ]
+  },
+  {
+    question: "Which NFL team has won the most Super Bowls?",
+    answers: [
+      { text: "New England Patriots", correct: true },
+      { text: "Pittsburgh Steelers", correct: true },
+      { text: "Dallas Cowboys", correct: false },
+      { text: "Green Bay Packers", correct: false }
+    ]
+  },
+  {
+    question: "What is the term for a baseball player who pitches?",
+    answers: [
+      { text: "Batter", correct: false },
+      { text: "Pitcher", correct: true },
+      { text: "Catcher", correct: false },
+      { text: "Slugger", correct: false }
+    ]
+  },
+  {
+    question: "What is the distance of a marathon race?",
+    answers: [
+      { text: "26.2 miles", correct: true },
+      { text: "20 miles", correct: false },
+      { text: "30 miles", correct: false },
+      { text: "24.6 miles", correct: false }
+    ]
+  },
+  {
+    question: "Which country has won the most Cricket World Cups?",
+    answers: [
+      { text: "India", correct: false },
+      { text: "Australia", correct: true },
+      { text: "West Indies", correct: false },
+      { text: "England", correct: false }
+    ]
+  },
+  {
+    question: "Which player is known as 'The King' in basketball?",
+    answers: [
+      { text: "Michael Jordan", correct: false },
+      { text: "LeBron James", correct: true },
+      { text: "Kobe Bryant", correct: false },
+      { text: "Shaquille O'Neal", correct: false }
+    ]
+  },
+  {
+    question: "In which sport would you perform a slam dunk?",
+    answers: [
+      { text: "Soccer", correct: false },
+      { text: "Basketball", correct: true },
+      { text: "Tennis", correct: false },
+      { text: "Volleyball", correct: false }
+    ]
+  },
+  {
+    question: "What is the name of the trophy awarded in the NHL?",
+    answers: [
+      { text: "The Stanley Cup", correct: true },
+      { text: "The Grey Cup", correct: false },
+      { text: "The Lombardi Trophy", correct: false },
+      { text: "The Claret Jug", correct: false }
+    ]
+  },
+  {
+    question: "Which country won the Rugby World Cup in 2019?",
+    answers: [
+      { text: "New Zealand", correct: false },
+      { text: "South Africa", correct: true },
+      { text: "England", correct: false },
+      { text: "Australia", correct: false }
+    ]
+  },
+  {
+    question: "How many points is a touchdown worth in American football?",
+    answers: [
+      { text: "5", correct: false },
+      { text: "6", correct: true },
+      { text: "7", correct: false },
+      { text: "4", correct: false }
+    ]
+  },
+  {
+    question: "Who is considered the greatest sprinter of all time?",
+    answers: [
+      { text: "Michael Johnson", correct: false },
+      { text: "Usain Bolt", correct: true },
+      { text: "Carl Lewis", correct: false },
+      { text: "Jesse Owens", correct: false }
+    ]
+  },
+  {
+    question: "Which sport uses the terms birdie and eagle?",
+    answers: [
+      { text: "Badminton", correct: false },
+      { text: "Golf", correct: true },
+      { text: "Tennis", correct: false },
+      { text: "Cricket", correct: false }
+    ]
+  },
+  {
+    question: "Which country is credited with inventing table tennis?",
+    answers: [
+      { text: "United States", correct: false },
+      { text: "China", correct: false },
+      { text: "England", correct: true },
+      { text: "India", correct: false }
+    ]
+  },
+  {
+    question: "What is the national sport of Canada?",
+    answers: [
+      { text: "Hockey", correct: true },
+      { text: "Lacrosse", correct: true },
+      { text: "Baseball", correct: false },
+      { text: "Basketball", correct: false }
+    ]
+  },
+  {
+    question: "What is the name of the MLB team from New York?",
+    answers: [
+      { text: "Dodgers", correct: false },
+      { text: "Yankees", correct: true },
+      { text: "Cubs", correct: false },
+      { text: "Red Sox", correct: false }
+    ]
+  },
+  {
+    question: "Which tennis tournament is played on grass courts?",
+    answers: [
+      { text: "Wimbledon", correct: true },
+      { text: "US Open", correct: false },
+      { text: "French Open", correct: false },
+      { text: "Australian Open", correct: false }
+    ]
+  },
+  {
+    question: "Which country has won the most FIFA Women's World Cup titles?",
+    answers: [
+      { text: "Germany", correct: false },
+      { text: "United States", correct: true },
+      { text: "Brazil", correct: false },
+      { text: "Japan", correct: false }
+    ]
+  },
+  {
+    question: "Which basketball player has the most NBA championship rings?",
+    answers: [
+      { text: "Michael Jordan", correct: false },
+      { text: "Bill Russell", correct: true },
+      { text: "LeBron James", correct: false },
+      { text: "Kareem Abdul-Jabbar", correct: false }
+    ]
+  },
+  {
+    question: "Which country is famous for sumo wrestling?",
+    answers: [
+      { text: "China", correct: false },
+      { text: "Japan", correct: true },
+      { text: "South Korea", correct: false },
+      { text: "Thailand", correct: false }
+    ]
+  },
+  {
+    question: "Which team won the UEFA Champions League in 2022?",
+    answers: [
+      { text: "Real Madrid", correct: true },
+      { text: "Liverpool", correct: false },
+      { text: "Bayern Munich", correct: false },
+      { text: "Manchester City", correct: false }
+    ]
+  }
+];
+  
+  // Timer
+    let timerInterval;
+    let timeElapsed = 0;
+    let score = 0;
+    let questionsAnswered = 0;
+  
+  // Shuffle questions
+    function shuffleArray(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+  
+  // Starts The Timer
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timeElapsed++;
+      }, 1000);
+    }
+  
+  // Stops The Timer
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+  
+  // Renders the questions from the array
+    function renderQuiz() {
+      const quizContainer = document.getElementById("quiz-container");
+      quizContainer.innerHTML = ""; // Clear existing questions
+  
+      const selectedQuestions = shuffleArray([...questions]).slice(0, 10); // Pick 10 random questions from the array
+  
+      selectedQuestions.forEach((questionObj, index) => {
+        const questionBlock = document.createElement("div");
+        questionBlock.className = "question-block";
+  
+        // Question text
+        const questionText = document.createElement("div");
+        questionText.className = "question";
+        questionText.innerText = `Question ${index + 1}: ${questionObj.question}`;
+        questionBlock.appendChild(questionText);
+  
+        // Answers
+        questionObj.answers.forEach(answer => {
+          const answerDiv = document.createElement("div");
+          answerDiv.className = "answer";
+          answerDiv.innerText = answer.text;
+          answerDiv.onclick = () => {
+            if (!timerInterval) startTimer();
+            questionsAnswered++;
+            if (answer.correct) {
+              score++;
+              questionBlock.innerHTML = `<div class="feedback correct-text">CORRECT</div>`;
+            } else {
+              questionBlock.innerHTML = `<div class="feedback wrong-text">WRONG</div>`;
+            }
+            if (questionsAnswered === selectedQuestions.length) {
+              stopTimer();
+              showResults(selectedQuestions.length);
+            }
+          };
+          questionBlock.appendChild(answerDiv);
+        });
+  
+        quizContainer.appendChild(questionBlock);
+      });
+    }
+  
+    function showResults(totalQuestions) {
+      const resultsContainer = document.getElementById("results-container");
+      resultsContainer.style.display = "block";
+      resultsContainer.innerHTML = `
+        <p>Your Score: ${score}/${totalQuestions}</p>
+        <p>Total Time: ${timeElapsed} seconds</p>
+      `;
+      resultsContainer.scrollIntoView({ behavior: "smooth" });
+    }
+  
+  // Load the quiz everytime a user refreshes 
+    window.onload = renderQuiz;
+  </script>
+
+  <!-- Java Code for Sign Up/Sign In Functions -->
+<script>
+  const signupModal = document.getElementById('signupModal');
+  const signinModal = document.getElementById('signinModal');
+  const messageModal = document.getElementById('messageModal');
+  const messageText = document.getElementById('messageText');
+  const messageOkButton = document.getElementById('messageOkButton');
+
+  document.getElementById('signupBtn').onclick = () => {
+    signupModal.style.display = 'flex';
+  };
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+  }
+
+  function closeMessage() {
+    messageModal.style.display = 'none';
+  }
+
+  function showSignIn() {
+    closeModal('signupModal');
+    signinModal.style.display = 'flex';
+  }
+
+  function showSignUp() {
+    closeModal('signinModal');
+    signupModal.style.display = 'flex';
+  }
+
+  function handleSignUp() {
+    const username = document.getElementById('signup-username').value.trim();
+    const password = document.getElementById('signup-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    const usernameError = document.getElementById('signup-username-error');
+    const passwordError = document.getElementById('signup-password-error');
+    const confirmPasswordError = document.getElementById('confirm-password-error');
+
+    let isValid = true;
+
+    usernameError.textContent = '';
+    passwordError.textContent = '';
+    confirmPasswordError.textContent = '';
+
+    if (!username) {
+      usernameError.textContent = 'Username is required.';
+      isValid = false;
+    }
+
+    if (!password) {
+      passwordError.textContent = 'Password is required.';
+      isValid = false;
+    } else if (password.length < 6) {
+      passwordError.textContent = 'Password must be at least 6 characters.';
+      isValid = false;
+    }
+
+    if (!confirmPassword) {
+      confirmPasswordError.textContent = 'Please confirm your password.';
+      isValid = false;
+    } else if (confirmPassword !== password) {
+      confirmPasswordError.textContent = 'Passwords do not match.';
+      isValid = false;
+    }
+
+    if (isValid) {
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
+      closeModal('signupModal');
+      messageText.textContent = 'You are now signed up! Please sign in.';
+      messageModal.style.display = 'block';
+      messageOkButton.style.display = 'inline-block';
+      messageOkButton.onclick = () => {
+        messageModal.style.display = 'none';
+        signinModal.style.display = 'flex';
+      };
+    }
+  }
+
+  function handleSignIn() {
+    const username = document.getElementById('signin-username').value.trim();
+    const password = document.getElementById('signin-password').value;
+
+    const usernameError = document.getElementById('signin-username-error');
+    const passwordError = document.getElementById('signin-password-error');
+
+    let isValid = true;
+
+    usernameError.textContent = '';
+    passwordError.textContent = '';
+
+    if (!username) {
+      usernameError.textContent = 'Username is required.';
+      isValid = false;
+    }
+
+    if (!password) {
+      passwordError.textContent = 'Password is required.';
+      isValid = false;
+    }
+
+    if (isValid) {
+      const storedUsername = localStorage.getItem('username');
+      const storedPassword = localStorage.getItem('password');
+
+      if (username === storedUsername && password === storedPassword) {
+        closeModal('signinModal');
+        updateNavigation(username);
+        messageText.textContent = `Welcome, ${username}!`;
+        messageModal.style.display = 'block';
+        messageOkButton.style.display = 'none';
+        setTimeout(() => {
+          messageModal.style.display = 'none';
+        }, 2000);
+      } else {
+        messageText.textContent = 'Incorrect username or password!';
+        messageModal.style.display = 'block';
+        messageOkButton.style.display = 'none';
+        setTimeout(() => {
+          messageModal.style.display = 'none';
+        }, 2000);
+      }
+    }
+  }
+
+  function updateNavigation(username) {
+    const signupBtn = document.getElementById('signupBtn');
+    const userMenu = document.getElementById('userMenu');
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    signupBtn.style.display = 'none';
+    userMenu.style.display = 'inline-block';
+    usernameDisplay.textContent = username;
+
+    userMenu.onclick = () => {
+      dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+    };
+
+    window.onclick = (event) => {
+      if (!userMenu.contains(event.target)) {
+        dropdownMenu.style.display = 'none';
+      }
+    };
+  }
+
+  function showAccountInfo() {
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
+
+    document.getElementById('accountUsername').textContent = username;
+    document.getElementById('accountPassword').value = password;
+
+    document.getElementById('accountModal').style.display = 'flex';
+  }
+
+  function signOut() {
+    document.getElementById('signupBtn').style.display = 'inline-block';
+    document.getElementById('userMenu').style.display = 'none';
+    document.getElementById('dropdownMenu').style.display = 'none';
+
+    messageText.textContent = 'You have signed out.';
+    messageModal.style.display = 'block';
+    messageOkButton.style.display = 'none';
+
+    setTimeout(() => {
+      messageModal.style.display = 'none';
+    }, 2000);
+  }
+</script>
+  
+  </body>
+  </html>
+  
